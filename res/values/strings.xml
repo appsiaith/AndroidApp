@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">APPLICATION_NAME_HERE</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="drawer_open">Open</string>
+	<string name="drawer_close">Close</string>
+	<string name="search">Search</string>
+	<string name="play">Play</string>
+	<string name="pause">Pause</string>
+	<string name="change_unit">Settings</string>
+	<string name="phrases">Phrases</string>
+	<string name="words">Words</string>
+	<string name="about">About</string>
+	<string name="order_welsh">Welsh</string>
+	<string name="order_english">English</string>
+	
+	
+	
+	
+	
+</resources>
