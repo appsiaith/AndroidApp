@@ -328,8 +328,8 @@ public class Appearance {
 	
 	public static int getModifier() {
 		
-		if (Tracker.getInstance().getWindowSize().x > 2 &&
-				Tracker.getInstance().getWindowSize().y > 2 )
+		if (Tracker.getInstance().getWindowSize().x > 750 &&
+				Tracker.getInstance().getWindowSize().y > 1150 )
 			MODIFIER = 2;
 		else
 			MODIFIER = 1;
