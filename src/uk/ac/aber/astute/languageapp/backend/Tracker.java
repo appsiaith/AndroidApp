@@ -1,6 +1,5 @@
 package uk.ac.aber.astute.languageapp.backend;
 
-
 import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -28,7 +27,6 @@ public class Tracker {
 	private static Tracker trackerInstance = null;
 	private int currentUnit;
 	private int currentGroupId;
-	private int currentGrammarGroupId;
 	private Point windowSize;
 	private SharedPreferences sharedPreferences;
 	
@@ -37,75 +35,120 @@ public class Tracker {
 	
 	private ArrayList<NotifyOnUpdate> updaterList;
 	
+	/**
+	 * This static method is used to get hold of the current singleton
+	 * tracker interface. If a tracker does not yet exist, it creates one.
+	 * 
+	 * @return The current tracker instance.
+	 */
 	public static Tracker getInstance() {
 		
 		if (trackerInstance == null) {
 			trackerInstance = new Tracker();
-			
-			/* Now we should read in what the current unit it, etc. so that
-			 * every time we run the app we get the previous settings.
-			 */
-			
 		}
 		
 		return trackerInstance;
 		
 	}
 	
+	/**
+	 * This class is a singleton, only the class itself should be able to 
+	 * create an instance of the tracker object.
+	 */
 	private Tracker() {
 		this.sharedPreferences = null;
-		
 	}
 
+	/**
+	 * Shared preferences are used by the Android platform to save the sate of
+	 * applications between executions, or when updates occur such as screen
+	 * rotations. As our tracker instance keeps track of updates across the 
+	 * application, it needs to have access to the shared preferences in order
+	 * to save and load in the state of the application.
+	 * 
+	 * When setting shared preferences, it is important to note that the first
+	 * thing that happens is the tracker uses the shared preferences object to
+	 * load in the state of the application. As such, setting a "new" shared
+	 * preferences file may have unexpected results such as causing the
+	 * application to change the current unit to a different one.
+	 * 
+	 * @param sharedPreferences The shared preferences associated with the 
+	 *                          running application.
+	 */
 	public void setSharedPreferences(SharedPreferences sharedPreferences) {
+		
 		this.sharedPreferences = sharedPreferences;
+		
 		this.currentGroupId = sharedPreferences.getInt("currentGroup", 0);
 		this.currentUnit = sharedPreferences.getInt("currentUnit", 0);
+		
 		if (sharedPreferences.getBoolean("northSouth", false)) {
+			
 			this.northSouth = NorthSouth.NORTH;
+			
 		} else {
+			
 			this.northSouth = NorthSouth.SOUTH;
+			
 		}
-		Log.e("LANG_APP", "Shared preferences loaded.");
+		
+		Log.i("LANG_APP", "Shared preferences loaded.");
+		
 	}
 	
 	/**
-	 * Adds a object to the notify on update request list. Objects in this list
-	 * will get sent notifications when {@link #doNotifications()} is called.
+	 * Adds an object to the notify on update request list. Objects in this 
+	 * list will get sent notifications when {@link #doNotifications()} is 
+	 * called.
 	 * 
 	 * @param nou The instance of the object requesting updates.
 	 */
 	public void notifyOnUpdate(NotifyOnUpdate nou) {
+		
 		if (this.updaterList == null)
 			this.updaterList = new ArrayList<NotifyOnUpdate>();
+		
 		if (!this.updaterList.contains(nou))
 			this.updaterList.add(nou);
+		
 	}
 	
 	/**
 	 * Causes all objects that have requested updates to have their 
-	 * updateDisplay() method called.
+	 * updateDisplay() method called. In addition, because we are
+	 * doing notifications, it implys something has changed, thus we
+	 * also save the state of the application in the shared preferences.
 	 * 
 	 * @see #notifyOnUpdate(NotifyOnUpdate)
+	 * @see #setSharedPreferences(SharedPreferences)
 	 */
 	private void doNotifications() {
 		
 		if (this.sharedPreferences != null) {
+			
 	      	SharedPreferences.Editor editor = sharedPreferences.edit();
 	      	editor.putInt("currentUnit", this.getCurrentUnit());
 	      	editor.putInt("currentGroup", this.getCurrentGroupId());
+	      	
 	      	if (this.getNorthSouth() == NorthSouth.SOUTH) {
+	      		
 	      		editor.putBoolean("northSouth", false);
+	      		
 	      	} else {
+	      		
 	      		editor.putBoolean("northSouth", true);
+	      		
 	      	}
+	      	
 	      	editor.commit();
-	      	Log.e("LANG_APP", "Shared perferences saved.");
+	      	Log.i("LANG_APP", "Shared perferences saved.");
+	      	
 		}
 	      
 		if (this.updaterList != null) 
 			for (int i = 0; i < this.updaterList.size(); i++)
 				this.updaterList.get(i).updateDisplay();
+		
 	}
 	
 	/**
@@ -118,8 +161,10 @@ public class Tracker {
 	 * @param currentUnit The current unit id.
 	 */
 	public void setCurrentUnit(int currentUnit) {
+		
 		this.currentUnit = currentUnit;
 		this.doNotifications();
+		
 	}
 	
 	/**
@@ -129,7 +174,9 @@ public class Tracker {
 	 * @return The current unit id that is being used.
 	 */
 	public int getCurrentUnit() {
+		
 		return this.currentUnit;
+		
 	}
 	
 	/**
@@ -142,16 +189,9 @@ public class Tracker {
 	 * @param currentGroupId The current group header id.
 	 */
 	public void setCurrentGroupId(int currentGroupId) {
+		
 		this.currentGroupId = currentGroupId;
-		//this.doNotifications();
-	}
-	
-	public void setCurrentGrammarGroupId(int currentGrammarGroupId) {
-		this.currentGrammarGroupId = currentGrammarGroupId;
-	}
-	
-	public int getCurrentGrammarGroupId() {
-		return this.currentGrammarGroupId;
+		
 	}
 	
 	/**
@@ -161,28 +201,34 @@ public class Tracker {
 	 * @return The current group id that is being used.
 	 */
 	public int getCurrentGroupId() {
+		
 		return this.currentGroupId;
+		
 	}
 	
 	/**
-	 * Used to set the widnow size. 
+	 * Used to set the window size. 
 	 * 
 	 * @param display We pass in the display, and the window size is calculated
 	 *                from that information.
 	 */
 	@SuppressLint("NewApi")
 	public void setWindowSize(Display display) {
+		
 		this.windowSize = new Point();
 		display.getSize(this.windowSize);
+		
 	}
 	
 	/**
-	 * Used to get the size of the screen, in pixles.
+	 * Used to get the size of the screen, in pixels.
 	 * 
 	 * @return The size of the screen display.
 	 */
 	public Point getWindowSize() {
-		return this.windowSize;	
+		
+		return this.windowSize;
+		
 	}
 	
 	/**
@@ -192,8 +238,10 @@ public class Tracker {
 	 * @param northSouth NORTH or SOUTH, as appropriate.
 	 */
 	public void setNorthSouth(NorthSouth northSouth) {
+		
 		this.northSouth = northSouth;
 		this.doNotifications();
+		
 	}
 	
 	/**
@@ -203,7 +251,9 @@ public class Tracker {
 	 * @return true if north, otherwise false.
 	 */
 	public NorthSouth getNorthSouth() {
+		
 		return this.northSouth;
+		
 	}
 	
 }

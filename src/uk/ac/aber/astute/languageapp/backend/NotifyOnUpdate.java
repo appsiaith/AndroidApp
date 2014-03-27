@@ -10,6 +10,11 @@ package uk.ac.aber.astute.languageapp.backend;
  */
 public interface NotifyOnUpdate {
 
+	/**
+	 * This method is called whenever updates occur. It is the responsibility
+	 * of the class that contains this method to decide if the update is 
+	 * relevant to it.
+	 */
 	public void updateDisplay();
 	 
 }
