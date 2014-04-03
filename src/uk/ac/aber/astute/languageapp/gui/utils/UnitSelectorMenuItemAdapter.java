@@ -3,6 +3,7 @@ package uk.ac.aber.astute.languageapp.gui.utils;
 import java.util.ArrayList;
 import uk.ac.aber.astute.APPLICATION_NAME_HERE.R;
 import uk.ac.aber.astute.languageapp.backend.AppMenuItem;
+import uk.ac.aber.astute.languageapp.backend.Tracker;
 import uk.ac.aber.astute.languageapp.backend.UnitAppMenuItem;
 import uk.ac.aber.astute.languageapp.backend.db.Appearance;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ListAdapter;
@@ -77,7 +79,7 @@ public class UnitSelectorMenuItemAdapter implements ListAdapter {
 		TextView subtext = (TextView) rowView.findViewById(R.id.subtext);
 		CheckBox selected = (CheckBox) rowView.findViewById(R.id.selected);
 		
-		/*selected.setOnClickListener(new OnClickListener() {
+		selected.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -87,7 +89,7 @@ public class UnitSelectorMenuItemAdapter implements ListAdapter {
 				
 			}
 
-		});*/
+		});
 		
 		title.setTextSize(this.appearance.getMainFontSize());
 		subtext.setTextSize(this.appearance.getSubFontSize());

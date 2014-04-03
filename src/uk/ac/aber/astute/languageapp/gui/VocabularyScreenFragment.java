@@ -126,15 +126,15 @@ public class VocabularyScreenFragment extends Fragment
 				
 				/* For each group, get all the vocab. */
 				ArrayList<Vocab> vocab = Vocab.getVocabByGroupOrderedBy(
-								this.context, groups.get(i).getId(),"english");
+								this.context, groups.get(i).getId(),"LOWER(english)");
 				if (orderWelsh)
 					vocab = Vocab.getVocabByGroupOrderedBy(
-							this.context, groups.get(i).getId(),"south");
+							this.context, groups.get(i).getId(),"LOWER(south)");
 				
 				for (int j = 0; j < vocab.size(); j++) {
 					
-					AppMenuItem tmp = new AppMenuItem(vocab.get(j).getEnglish(),
-												vocab.get(j).getLanguage());
+					AppMenuItem tmp = new AppMenuItem(vocab.get(j).getLanguage(),
+												vocab.get(j).getEnglish());
 					tmp.setId(vocab.get(j).getId());
 					this.menuItems.add(tmp);					
 				}

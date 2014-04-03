@@ -127,7 +127,7 @@ public class Vocab {
 		ldb = LanguageDatabase.getInstance(context);
 		try {
 			
-			ids = ldb.getIntegerArrayWithQueryOrdered(v_str, "id", null, null,"english");
+			ids = ldb.getIntegerArrayWithQueryOrdered(v_str, "id", null, null,"LOWER(english)");
 			list = new ArrayList<Vocab>();
 			
 			for (int i =0; i < ids.size(); i++)
@@ -152,7 +152,7 @@ public class Vocab {
 		ldb = LanguageDatabase.getInstance(context);
 		try {
 			
-			ids = ldb.getIntegerArrayWithQueryOrdered(v_str, "id", null, null,"south");
+			ids = ldb.getIntegerArrayWithQueryOrdered(v_str, "id", null, null,"LOWER(south)");
 			list = new ArrayList<Vocab>();
 			
 			for (int i =0; i < ids.size(); i++)

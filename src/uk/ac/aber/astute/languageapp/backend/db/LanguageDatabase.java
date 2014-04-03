@@ -329,7 +329,7 @@ public class LanguageDatabase extends SQLiteOpenHelper {
 		ArrayList<Integer> result = null;
 		
 		Cursor cursor = this.db.query(tableName, new String[] {columnName}, 
-						where, whereArgs, null, null, "LOWER(" +orderBy+")");
+						where, whereArgs, null, null, "" +orderBy+"");
 			
 		if (cursor != null) {
 			

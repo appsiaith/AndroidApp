@@ -162,9 +162,9 @@ public class RevisionScreenFragment extends Fragment implements NotifyOnUpdate {
 		final LinearLayout correctQuestion = new LinearLayout(context);
 		correctQuestion.setOrientation(LinearLayout.HORIZONTAL);
 		correctQuestion.setBackground(Files.getImageFromString(context, "revision/revision_click_area.png"));
-		correctQuestion.addView(noButton);
-		correctQuestion.addView(correct);
 		correctQuestion.addView(yesButton);
+		correctQuestion.addView(correct);
+		correctQuestion.addView(noButton);
 		correctQuestion.setGravity(Gravity.CENTER);
 		correctQuestion.setMinimumHeight(185);
 		
@@ -193,7 +193,7 @@ public class RevisionScreenFragment extends Fragment implements NotifyOnUpdate {
 					
 					for (int j = 0; j < headers.size(); j++) {
 						
-						ArrayList<Vocab> currentVocab = Vocab.getVocabByGroupOrderedBy(context, headers.get(j).getId(),"english");
+						ArrayList<Vocab> currentVocab = Vocab.getVocabByGroupOrderedBy(context, headers.get(j).getId(),"LOWER(english)");
 						
 						for (int k = 0; k < currentVocab.size(); k++) {
 							vocabFull.add(currentVocab.get(k));

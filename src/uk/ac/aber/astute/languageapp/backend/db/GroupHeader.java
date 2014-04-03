@@ -106,6 +106,33 @@ public class GroupHeader {
 		
 	}
 	
+	public static ArrayList<GroupHeader> getAllGroupHeadersByTypeOrderBy(Context context, String groupType, String orderBy) {
+		
+		ArrayList<GroupHeader> groupHeaders = null;
+		ArrayList<Integer> ids = null;
+		
+		ldb = LanguageDatabase.getInstance(context);
+		
+		try {
+			
+			ids = ldb.getIntegerArrayWithQueryOrdered(g_str, "id", "groupType=?", new String[] { ""+groupType},orderBy);
+			groupHeaders = new ArrayList<GroupHeader>();
+			
+			for (int i = 0; i < ids.size(); i++)
+				if (GroupHeader.getGroupHeaderById(context, ids.get(i)) != null)
+					groupHeaders.add(GroupHeader.getGroupHeaderById(context, ids.get(i)));
+			
+		} catch (DataNotFoundException dnfe) {
+			
+			Log.e("LANG_APP", "Error getting group headers: " + dnfe.toString());
+			groupHeaders = null;
+			
+		}
+		
+		return groupHeaders;
+		
+	}
+	
 	public static ArrayList<GroupHeader> getGroupHeaders(Context context, int lessonId, String groupType) {
 		
 		ArrayList<GroupHeader> groupHeaders = null;

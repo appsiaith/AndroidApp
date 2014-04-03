@@ -114,8 +114,8 @@ public class DictionaryScreenFragment extends Fragment implements NotifyOnUpdate
 		
 		for (int i = 0; i < vocab.size(); i++) {
 								
-				AppMenuItem tmp = new AppMenuItem(vocab.get(i).getEnglish(),
-											vocab.get(i).getLanguage());
+				AppMenuItem tmp = new AppMenuItem(vocab.get(i).getLanguage(),
+											vocab.get(i).getEnglish());
 				
 				tmp.setId(vocab.get(i).getId());
 				this.menuItems.add(tmp);					

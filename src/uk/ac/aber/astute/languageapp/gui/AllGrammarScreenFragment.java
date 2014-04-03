@@ -103,8 +103,8 @@ public class AllGrammarScreenFragment extends Fragment implements NotifyOnUpdate
 		
 		/* Get the items to put in the menu. */
 		ArrayList<GroupHeader> groupHeaders = 
-				GroupHeader.getAllGroupHeadersByType(this.context, 
-											GroupHeader.GRAMMAR_GROUP);
+				GroupHeader.getAllGroupHeadersByTypeOrderBy(this.context, 
+											GroupHeader.GRAMMAR_GROUP, "lessonId");
 				
 		this.menuItems = new ArrayList<AppMenuItem>();
 		
