@@ -135,9 +135,9 @@ public class DoExerciseScreenFragment extends Fragment implements NotifyOnUpdate
 			languageText.setText(
 					this.exercise.get(this.counter).getQuestionLanguage());
 			
-			englishText.setTextSize(this.appearance.getMainFontSize());
-			languageText.setTextSize(this.appearance.getMainFontSize());
-			answerText.setTextSize(this.appearance.getMainFontSize());
+			englishText.setTextSize(this.appearance.getMainFontSize() * Appearance.getModifier());
+			languageText.setTextSize(this.appearance.getMainFontSize() * Appearance.getModifier());
+			answerText.setTextSize(this.appearance.getMainFontSize() * Appearance.getModifier());
 			
 			
 			if (this.exercise.get(this.counter).getPicture() != null) {

@@ -54,9 +54,10 @@ public class HTMLScreenFragment extends Fragment {
 		
 		this.webView = new WebView(this.context);
 		this.layout.setLayoutParams(new ViewGroup.LayoutParams(Tracker.getInstance().getWindowSize().x,
-				Tracker.getInstance().getWindowSize().y));
+				Tracker.getInstance().getWindowSize().y-100));
 		this.webView.setLayoutParams(new ViewGroup.LayoutParams(Tracker.getInstance().getWindowSize().x,
-				Tracker.getInstance().getWindowSize().y));
+				Tracker.getInstance().getWindowSize().y-100));
+		this.webView.getSettings().setDefaultTextEncodingName("utf-8");
 		this.updateDisplay();
 		this.getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 		
@@ -100,7 +101,8 @@ public class HTMLScreenFragment extends Fragment {
 		if (url != null) {
 			this.webView.loadUrl(url);
 		} else {
-			this.webView.loadData(html, "text/html", null);
+			this.webView.loadData(html, "text/html; charset=utf-8", null);
+
 		}		
 		
 		this.layout.addView(webView);

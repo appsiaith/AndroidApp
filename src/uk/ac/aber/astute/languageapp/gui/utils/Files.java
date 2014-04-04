@@ -2,12 +2,17 @@ package uk.ac.aber.astute.languageapp.gui.utils;
 
 import java.io.IOException;
 import uk.ac.aber.astute.languageapp.backend.Tracker;
+import uk.ac.aber.astute.languageapp.backend.db.Appearance;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.view.Gravity;
 
 /**
  * A useful class for dealing with files in the application. We should never
@@ -97,13 +102,23 @@ public class Files {
 	public static Drawable getImageFromString(Context context, String fname) {
 		
 		Drawable d = null;
+		ScaleDrawable sd = null;
 		
 		try {
-		
+			
 			Log.i("LANG_APP", "Loading image file: " + fname + ".jpg");
-			d = BitmapDrawable.createFromStream(
-					context.getAssets().open(fname + ".jpg"), null);
-					 
+		/*	d = BitmapDrawable.createFromStream(
+					context.getAssets().open(fname + ".jpg"), null); */
+			Bitmap b = BitmapFactory.decodeStream(context.getAssets().open(fname + ".jpg"));
+			if (Appearance.getModifierPractice() == 2) {
+				if (b != null) {
+					Bitmap n = Bitmap.createScaledBitmap(b, 120, 120, false);
+					d = new BitmapDrawable(context.getResources(), b);
+				}
+			} else {
+				d = BitmapDrawable.createFromStream(
+						context.getAssets().open(fname + ".jpg"), null);
+			}
 			
 		} catch (IOException ioe) {
 			
@@ -117,8 +132,18 @@ public class Files {
 			try {
 				
 				Log.i("LANG_APP", "Loading audio file: " + fname);
-				d = BitmapDrawable.createFromStream(
-						context.getAssets().open(fname), null);
+				/*d = BitmapDrawable.createFromStream(
+						context.getAssets().open(fname), null);*/
+				Bitmap b = BitmapFactory.decodeStream(context.getAssets().open(fname));
+				if (Appearance.getModifierPractice() == 2) {
+					if (b != null) {
+						Bitmap n = Bitmap.createScaledBitmap(b, 120, 120, false);
+						d = new BitmapDrawable(context.getResources(), b);
+					}
+				} else {
+					d = BitmapDrawable.createFromStream(
+							context.getAssets().open(fname), null);
+				}
 				
 			} catch (IOException ioee) {
 				
@@ -128,6 +153,9 @@ public class Files {
 			}
 			
 		}
+		
+		//if (d != null)
+		//	sd = new ScaleDrawable(d, Gravity.CENTER,2.0f, 2.0f);
 		
 		return d;
 		

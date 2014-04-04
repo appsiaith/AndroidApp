@@ -61,9 +61,10 @@ public class DoMonologueScreenFragment extends Fragment {
 		
 		this.webView = new WebView(this.context);
 		this.layout.setLayoutParams(new ViewGroup.LayoutParams(Tracker.getInstance().getWindowSize().x,
-				Tracker.getInstance().getWindowSize().y));
+				Tracker.getInstance().getWindowSize().y-100));
 		this.webView.setLayoutParams(new ViewGroup.LayoutParams(Tracker.getInstance().getWindowSize().x,
-				Tracker.getInstance().getWindowSize().y));
+				Tracker.getInstance().getWindowSize().y-100));
+		this.webView.getSettings().setDefaultTextEncodingName("utf-8");
 		this.updateDisplay();
 		this.getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 		this.setHasOptionsMenu(true);
@@ -91,7 +92,7 @@ public class DoMonologueScreenFragment extends Fragment {
 
 		d = Dialog.getDialogByGroup(this.context, 
 				Tracker.getInstance().getCurrentGroupId()).get(0);
-		this.webView.loadData(d.getLanguage(), "text/html", null);
+		this.webView.loadData(d.getLanguage(), "text/html; charset=utf-8", null);
 		
 		GroupHeader g = GroupHeader.getGroupHeaderById(this.context, 
 				Tracker.getInstance().getCurrentGroupId());

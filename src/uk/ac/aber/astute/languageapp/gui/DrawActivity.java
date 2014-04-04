@@ -125,6 +125,7 @@ public class DrawActivity extends Activity implements NotifyOnUpdate {
 														int arg2, long arg3) {
 						
 						Tracker.getInstance().setCurrentUnit(arg2+1);
+						dv.closeDrawer(GravityCompat.START);
 				
 					}
 					

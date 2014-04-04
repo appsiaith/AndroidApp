@@ -232,6 +232,7 @@ public class Appearance {
 	 */
 	public static int getModifier() {
 		
+		/*
 		if (Tracker.getInstance().getWindowSize().x > 750 &&
 				Tracker.getInstance().getWindowSize().y > 1150 )
 			MODIFIER = 2;
@@ -242,8 +243,27 @@ public class Appearance {
 		Log.i("LANG_APP", "Screen size: x: " + 
 					Tracker.getInstance().getWindowSize().x + ", y: "
 								 + Tracker.getInstance().getWindowSize().y);
-		
+		*/
+		MODIFIER = 1;
 		return MODIFIER;
+		
+	}
+	
+	public static int getModifierPractice() {
+		
+		
+		Log.i("LANG_APP", "Screen size: x: " + 
+				Tracker.getInstance().getWindowSize().x + ", y: "
+							 + Tracker.getInstance().getWindowSize().y);
+	
+		
+		if (Tracker.getInstance().getWindowSize().x > 750 &&
+				Tracker.getInstance().getWindowSize().y > 1150 )
+			return 2;
+		
+		else
+			return 1;
+		
 		
 	}
 	
