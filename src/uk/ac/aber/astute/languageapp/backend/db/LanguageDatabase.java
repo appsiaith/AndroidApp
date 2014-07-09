@@ -226,18 +226,29 @@ public class LanguageDatabase extends SQLiteOpenHelper {
 								   			String where, String whereArgs[]) 
 								   			  	 throws DataNotFoundException {
 		
+		Log.e("Info:", "tableName: " + tableName + ", columnName: " + columnName + ", where: " + where);
+		for (int i = 0; i < whereArgs.length; i++) {
+			Log.e("Info:", whereArgs[i]);
+		}
+		
 		Integer result = null;
 
 		Cursor cursor = this.db.query(tableName,  new String[] {columnName}, 
 											where, whereArgs, null, null, null);
 		if (cursor != null) {
+			
+			
 			if (cursor.moveToNext()) {
 				int index = cursor.getColumnIndexOrThrow(columnName);
 				if (index != -1) {
 					result = Integer.valueOf(cursor.getInt(index));
 				}
 			}
+			
+			cursor.close();
 		}
+		
+
 				
 		if (result == null) throw new DataNotFoundException(
 				tableName, columnName, where, whereArgs);
@@ -273,7 +284,10 @@ public class LanguageDatabase extends SQLiteOpenHelper {
 		if (cursor == null) throw new DataNotFoundException(
 				tableName, columnName, where, whereArgs);
 		
-		return cursor.getCount();
+		int count = cursor.getCount();
+		cursor.close();
+		
+		return count;
 		
 	}
 	
@@ -312,6 +326,7 @@ public class LanguageDatabase extends SQLiteOpenHelper {
 				}
 			}
 			
+			cursor.close();
 			
 		}
 	
@@ -340,6 +355,9 @@ public class LanguageDatabase extends SQLiteOpenHelper {
 					result.add(Integer.valueOf(cursor.getInt(index)));
 				}
 			}
+			
+			cursor.close();
+			
 		}
 
 		return result;
